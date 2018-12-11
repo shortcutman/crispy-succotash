@@ -3,13 +3,25 @@
 	<title>Prioritiser!</title>
 </head>
 <body>
-<form action="/" method="post">
-  First name:
-  <input type="text" name="item" value="">
-  <input type="submit" value="Create">
+<form action="/add" method="get">
+  Item:
+  <input type="text" name="item" value=""/>
+  <input type="submit" value="Create"/>
 </form><br>
 <ol>
-{{~it.list :value:index}}<li>{{=value}}</li>{{~}}
+{{~it.list :value:index}}
+<li>
+	{{=value}}
+	<form action="/delete" method="get">
+		<input type="hidden" name="item" value="{{=value}}"/>
+		<input type="submit" value="Delete"/>
+	</form>
+	<form action="/move" method="get">
+		<input type="hidden" name="item" value="{{=value}}"/>
+		<input type="submit" value="Move to top"/>
+	</form>
+</li>
+{{~}}
 </ol>
 </body>
 </html>
