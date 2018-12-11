@@ -17,12 +17,7 @@ const server = http.createServer((req, res) => {
 			body += chunk.toString();
 		});
 		req.on('end', () => {
-			console.log('post data:');
-			console.log(parse(body)[' item'].toString());
-
 			items.push(parse(body)[' item'].toString());
-			console.log('items: ');
-			console.log(items);
 		});
 		res.writeHead(302, {
 			'Location': '/'
