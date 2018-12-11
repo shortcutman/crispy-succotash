@@ -1,0 +1,15 @@
+<html>
+<head>
+	<title>Prioritiser!</title>
+</head>
+<body>
+<form action="/" method="post">
+  First name:
+  <input type="text" name="item" value="">
+  <input type="submit" value="Create">
+</form><br>
+<ol>
+{{~it.list :value:index}}<li>{{=value}}</li>{{~}}
+</ol>
+</body>
+</html>
