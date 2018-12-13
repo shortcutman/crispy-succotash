@@ -3,7 +3,7 @@ const { parse } = require('querystring');
 const url = require('url');
 
 const hostname = '127.0.0.1';
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 var dots = require('dot').process({path: "."});
 
