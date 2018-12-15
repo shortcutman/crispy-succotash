@@ -32,6 +32,12 @@ $(document).ready(() => {
 	});
 });
 
+var source = new EventSource('/api/update');
+source.onmessage = (event) => {
+	loaditems(JSON.parse(event.data));
+}
+source.onerror = () => source.close();
+
 function moveToTop(itemId) {
 	$.ajax("/api/move",
 	{
