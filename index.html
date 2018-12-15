@@ -1,0 +1,68 @@
+<html>
+<head>
+	<title>Prioritiser!</title>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/dot/1.1.2/doT.js"></script>
+	<script>
+
+$(document).ready(() => {
+
+	$('ol#thelist').on('click', '.movebutton', event => {
+		moveToTop($(event.currentTarget).attr("data-id"));
+	});
+
+	$.getJSON("/api/", (data, status) => {
+		loaditems(data);
+	});
+
+	$("#additem").submit(event => {
+		$.ajax("/api/item/",
+		{
+			type: "POST",
+			contentType: "application/json",
+			data: JSON.stringify({"title": $("input[name=new_item_name]").val()}),
+			dataType: "json",
+			processData: false,
+			success: (data, status) => loaditems(data),
+			error: (error) => console.log(error)
+		});
+
+		event.preventDefault();
+	});
+});
+
+function moveToTop(itemId) {
+	$.ajax("/api/move",
+	{
+		type: "POST",
+		contentType: "application/json",
+		data: JSON.stringify({id: itemId, position: 0}),
+		dataType: "json",
+		processData: false,
+		success: (data, status) => loaditems(data),
+		error: (error) => console.log(error)
+	});
+}
+
+
+function loaditems(items) {
+	$("li").remove();
+	items.forEach((item) => {
+		$("#thelist").append("<li>" + item.title + " <input class=\"movebutton\" data-id=\""+item.id+"\" type=\"Submit\" value=\"Move to Top\"/> </li>");
+	});
+}
+	</script>
+
+</head>
+<body>
+<form id="additem">
+  	<p>Item:
+  		<input type="text" name="new_item_name" value=""/>
+  		<input id= "add" type="submit" value="Create"/>
+	</p>
+</form><br>
+<ol id="thelist">
+</ol>
+</body>
+</html>

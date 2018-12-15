@@ -11,10 +11,10 @@ const arrayMove = require('array-move');
 var items = [];
 
 app.use(bodyParser.json());
+app.use('/templates/', express.static('/templates/'));
 
 app.get('/', (req, res) => {
-	res.set('Content-Type', 'text/html');
-	res.send(dots.template_express({list: items}));
+	res.sendFile( __dirname + '/index.html');
 });
 
 app.get('/api/', (req, res) => {
