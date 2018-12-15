@@ -1,0 +1,65 @@
+<html>
+<head>
+	<title>Prioritiser!</title>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+	<script>
+
+$(document).ready(function(){
+	$.getJSON("/api/", (data, status) => {
+		loaditems(data);
+	});
+
+	$("#additem").submit(function(event){
+		$.ajax("/api/item/",
+		{
+			type: "POST",
+			contentType: "application/json",
+			data: JSON.stringify({"title": $("input[name=new_item_name]").val()}),
+			dataType: "json",
+			processData: false,
+			success: (data, status) => {
+			console.log("response data: " + data);
+			loaditems(data);},
+			error: (error) => console.log(error)
+		});
+
+		event.preventDefault();
+	});
+});
+
+function loaditems(items) {
+	console.log("loaditems");
+
+	$("li").remove();
+	items.forEach((item) => {
+		$("ol").append("<li>" + item.title + "</li>");
+	});
+}
+	</script>
+
+</head>
+<body>
+<form id="additem">
+  Item:
+  <input type="text" name="new_item_name" value=""/>
+  <input id= "add" type="submit" value="Create"/>
+</form><br>
+<ol>
+{{~it.list :value:index}}
+<li>
+	{{=value}}
+	<form action="/delete" method="get">
+		<input type="hidden" name="item" value="{{=value}}"/>
+		<input type="submit" value="Delete"/>
+	</form>
+	<form action="/move" method="get">
+		<input type="hidden" name="item" value="{{=value}}"/>
+		<input type="submit" value="Move to top"/>
+	</form>
+</li>
+{{~}}
+</ol>
+</body>
+</html>
