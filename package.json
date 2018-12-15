@@ -6,6 +6,7 @@
   "dependencies": {
     "array-move": "^1.0.0",
     "express": "^4.16.4",
+    "express-sse": "^0.5.0",
     "uuid": "^3.3.2"
   },
   "devDependencies": {},

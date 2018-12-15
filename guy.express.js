@@ -1,10 +1,10 @@
 const uuidv1 = require('uuid/v1');
 const arrayMove = require('array-move');
 const express = require('express');
+const expresssse = require('express-sse');
 
 const app = express();
 const port = process.env.PORT || 3000;
-
 
 var items = [];
 
@@ -25,6 +25,7 @@ app.post('/api/item', (req, res) => {
 		title: req.body.title
 	});
 	res.json(items);
+	stream.send(items);
 });
 
 app.post('/api/move', (req, res) => {
@@ -42,6 +43,7 @@ app.post('/api/move', (req, res) => {
 
 	arrayMove.mut(items, idIndex, req.body.position);
 	res.json(items);
+	stream.send(items);
 });
 
 app.post('/api/delete', (req, res) => {
@@ -53,6 +55,9 @@ app.post('/api/delete', (req, res) => {
 	items.splice(idIndex, 1);
 	res.json(items);
 });
+
+var stream = new expresssse();
+app.get('/api/update', stream.init);
 
 
 app.listen(port, () => console.log('Listening...'));
