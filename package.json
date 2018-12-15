@@ -5,8 +5,6 @@
   "main": "guy.js",
   "dependencies": {
     "array-move": "^1.0.0",
-    "body-parser": "^1.18.3",
-    "dot": "^1.1.2",
     "express": "^4.16.4",
     "uuid": "^3.3.2"
   },

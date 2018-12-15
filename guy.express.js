@@ -1,16 +1,14 @@
+const uuidv1 = require('uuid/v1');
+const arrayMove = require('array-move');
 const express = require('express');
-const bodyParser = require('body-parser');
+
 const app = express();
 const port = process.env.PORT || 3000;
 
-var dots = require('dot').process({path: ".", templateSettings: {strip: false}});
-
-const uuidv1 = require('uuid/v1');
-const arrayMove = require('array-move');
 
 var items = [];
 
-app.use(bodyParser.json());
+app.use(express.json());
 app.use('/templates/', express.static('/templates/'));
 
 app.get('/', (req, res) => {
@@ -22,7 +20,6 @@ app.get('/api/', (req, res) => {
 });
 
 app.post('/api/item', (req, res) => {
-	console.log(req.body);
 	items.push({
 		id: uuidv1(),
 		title: req.body.title
