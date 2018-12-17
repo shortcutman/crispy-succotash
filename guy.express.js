@@ -33,6 +33,7 @@ app.post('/api/move', (req, res) => {
 		if (el.id === req.body.id) {
 			return true;
 		}
+		return false;
 	});
 	if (idIndex == -1)
 	{
@@ -51,7 +52,9 @@ app.post('/api/delete', (req, res) => {
 		if (el.id === req.body.id) {
 			return true;
 		}
+		return false;
 	});
+
 	items.splice(idIndex, 1);
 	res.json(items);
 });
