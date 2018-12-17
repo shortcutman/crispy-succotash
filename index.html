@@ -12,6 +12,10 @@ $(document).ready(() => {
 		moveToTop($(event.currentTarget).attr("data-id"));
 	});
 
+	$('ol#thelist').on('click', '.deletebutton', event => {
+		deleteItem($(event.currentTarget).attr("data-id"));
+	});
+
 	$.getJSON("/api/", (data, status) => {
 		loaditems(data);
 	});
@@ -51,11 +55,23 @@ function moveToTop(itemId) {
 	});
 }
 
+function deleteItem(itemId) {
+	$.ajax("/api/delete",
+	{
+		type: "POST",
+		contentType: "application/json",
+		data: JSON.stringify({id: itemId}),
+		dataType: "json",
+		processData: false,
+		success: (data, status) => loaditems(data),
+		error: (error) => console.log(error)
+	});
+}
 
 function loaditems(items) {
 	$("li").remove();
 	items.forEach((item) => {
-		$("#thelist").append("<li>" + item.title + " <input class=\"movebutton\" data-id=\""+item.id+"\" type=\"Submit\" value=\"Move to Top\"/> </li>");
+		$("#thelist").append("<li>" + item.title + " <input class=\"movebutton\" data-id=\""+item.id+"\" type=\"Submit\" value=\"Move to Top\"/> <input class=\"deletebutton\" data-id=\""+item.id+"\" type=\"Submit\" value=\"Delete\"/> </li>");
 	});
 }
 	</script>
