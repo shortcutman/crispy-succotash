@@ -31,7 +31,7 @@ $(document).ready(() => {
 			success: (data, status) => loaditems(data),
 			error: (error) => console.log(error)
 		});
-
+		$("input[name=new_item_name]").val("");
 		event.preventDefault();
 	});
 });
