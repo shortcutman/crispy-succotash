@@ -57,6 +57,7 @@ app.post('/api/delete', (req, res) => {
 
 	items.splice(idIndex, 1);
 	res.json(items);
+	stream.send(items);
 });
 
 var stream = new expresssse();
